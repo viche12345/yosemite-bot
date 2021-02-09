@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.io.File
 
 plugins {
     kotlin("jvm") version "1.4.10"
@@ -6,7 +7,7 @@ plugins {
 }
 
 group = "me.vkwok"
-version = "1.0-SNAPSHOT"
+version = "1.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -32,6 +33,17 @@ tasks.jar {
     }
     configurations["compileClasspath"].forEach { file: File ->
         from(zipTree(file.absoluteFile))
+    }
+    doLast {
+        File(destinationDirectory.asFile.get(), "yosemite-bot-MAC.command").writeText("""
+            #!/bin/bash
+            cd "$(dirname ${'$'}BASH_SOURCE)"
+            clear
+            java -jar yosemite-bot-${project.version}.jar
+        """.trimIndent())
+        File(destinationDirectory.asFile.get(), "yosemite-bot-WINDOWS.bat").writeText("""
+            java -jar yosemite-bot-${project.version}.jar
+        """.trimIndent())
     }
 }
 
