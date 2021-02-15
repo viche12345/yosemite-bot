@@ -13,10 +13,16 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    set("retrofit-version", "2.9.0")
+}
+
 dependencies {
     testImplementation(kotlin("test-junit"))
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:${project.ext["retrofit-version"]}")
+    implementation("com.squareup.retrofit2:converter-gson:${project.ext["retrofit-version"]}")
+    implementation("com.squareup.retrofit2:adapter-rxjava3:${project.ext["retrofit-version"]}")
+    implementation("io.reactivex.rxjava3:rxjava:3.0.10")
 }
 
 tasks.test {
